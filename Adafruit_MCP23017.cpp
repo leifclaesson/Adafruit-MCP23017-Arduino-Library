@@ -102,7 +102,7 @@ void Adafruit_MCP23017::updateRegisterBit(uint8_t pin, uint8_t pValue, uint8_t p
 /**
  * Initializes the MCP23017 given its HW selected address, see datasheet for Address selection.
  */
-void Adafruit_MCP23017::begin(uint8_t addr) {
+void Adafruit_MCP23017::begin(uint8_t addr, uint16_t iomode) {
 	if (addr > 7) {
 		addr = 7;
 	}
@@ -112,8 +112,8 @@ void Adafruit_MCP23017::begin(uint8_t addr) {
 
 	// set defaults!
 	// all inputs on port A and B
-	writeRegister(MCP23017_IODIRA,0xff);
-	writeRegister(MCP23017_IODIRB,0xff);
+	writeRegister(MCP23017_IODIRA,iomode & 0xff);
+	writeRegister(MCP23017_IODIRB,(iomode >> 8) & 0xff);
 }
 
 /**
